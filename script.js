@@ -1,37 +1,51 @@
-const nameA = document.querySelector("#nameA").value;
-const nameB = document.querySelector("#nameB").value;
 const result = document.querySelector(".result");
 
 const btn = document.querySelector("#btn");
 const form = document.querySelector(".form");
-const msg = document.querySelector('.msg');
+const errorA = document.querySelector(".nameAError");
+const errorB = document.querySelector(".nameBError");
 
-const calculateLove = () => {
-  ;
-  //random love score
-  let loveScore = Math.random(Math.floor * 100) + 1;
+btn.addEventListener("click", (e) => {
+  e.preventDefault();
 
-  if (nameA == " " && nameB == "") {
-    return msg.textContent = "add your name";
+  loveInput();
+});
 
-   
-  } else if (loveScore >= 90) {
-    return result.textContent = "Your love is pure!";
-  } else if (loveScore >= 60) {
-    result.textContent = "Need some work!";
+const loveInput = () => {
+  const nameA = document.querySelector("#nameA").value;
+  const nameB = document.querySelector("#nameB").value;
+
+  errorA.style.display = "none";
+  errorB.style.display = "none";
+
+  if (nameA == "" || nameA.length < 2) {
+    errorA.style.display = "block";
+    errorA.innerHTML = "Do not leave blank";
+  } else if (!isNaN(nameA)) {
+    errorA.style.display = "block";
+    errorA.innerHTML = "Number name not allowed";
+  } else if (nameB == "" || nameB.length < 2) {
+    errorB.style.display = "block";
+    errorB.innerHTML = "Do not leave blank";
+  } else if (!isNaN(nameB)) {
+    errorB.style.display = "block";
+    errorB.innerHTML = "Number name not allowed";
+  } else {
+    lovePercentage();
+
+    
   }
-
-
-  
-
-
-
-
-
-
-
 };
 
-calculateLove();
+const lovePercentage = () => {
+  let loveRandom = Math.floor(Math.random() * 100);
 
-form.addEventListener("submit", calculateLove);
+  if (loveRandom <= 50) {
+    result.innerHTML = `${loveRandom}%. You are not compatible! Don't dream on it. `;
+  } else if (loveRandom <= 70) {
+    result.innerHTML = `${loveRandom} % You have a chance!`;
+  } else if (loveRandom <= 90) {
+    result.innerHTML = `${loveRandom}% Match made in heaven!`;
+  }
+};
+
